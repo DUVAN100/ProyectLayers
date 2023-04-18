@@ -1,35 +1,25 @@
 import expres from 'express';
 
 export let routes = expres.Router();
+import {ContorollerRooms} from '../Controllers/ContorollerRoom.js'
+import {ContorollerBooking} from '../Controllers/ControllerBooking.js'
 
-routes.get('/rooms', function (req, res) {
-    res.send('Looking a rooms');
-})
-routes.get('/room', function (req, res) {
-    res.send('Looking a room');
-})
-routes.post('/sroom', function (req, res) {
-    res.send('Save a room');
-})
-routes.get('/uroom', function (req, res) {
-    res.send('Update a room');
-})
-routes.delete('/droom', function (req, res) {
-    res.send('Delete a room');
-})
+
+let contorollerRoom = new ContorollerRooms();
+let contorollerBooking = new ContorollerBooking();
+//routes
+routes.post('/sroom', contorollerRoom.saveRoom)
+routes.get('/room/:idroom', contorollerRoom.searchRoom)
+routes.get('/rooms', contorollerRoom.searchRooms)
+routes.put('/uroom/:idroom', contorollerRoom.updateRoom)
+routes.delete('/droom/:idroom', contorollerRoom.deleteRoom)
+
+
+
+
 //Bookings
-routes.get('/bookings', function (req, res) {
-res.send('Looking a bookings');
-})
-routes.get('/booking', function (req, res) {
-    res.send('Looking a booking');
-})
-routes.post('/sbooking', function (req, res) {
-    res.send('Save a booking');
-})
-routes.get('/ubooking', function (req, res) {
-    res.send('Update a booking');
-})
-routes.delete('/dbooking', function (req, res) {
-    res.send('Delete a booking');
-})
+routes.post('/sbooking', contorollerBooking.saveBooking)
+routes.get('/booking/:idbooking', contorollerBooking.searchBooking)
+routes.get('/bookings', contorollerBooking.searchBookings)
+routes.put('/ubooking/:idbooking', contorollerBooking.updateBooking)
+routes.delete('/dbooking/:idbooking', contorollerBooking.deleteBooking)
