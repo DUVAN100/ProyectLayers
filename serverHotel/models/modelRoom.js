@@ -6,7 +6,6 @@ const Room =  new Schema({
     name: {
         type : String,
         required : true,
-
     },
     photo: {
         type : [String],
@@ -14,18 +13,18 @@ const Room =  new Schema({
     },
     description: {
         type : String,
-        required : true,
+        required : true
     },
     price: {
         type : Number,
         required : true
     },
-    numberPeoples: {
+    numberpeoples: {
         type : Number,
         required : true
     },
-    reserved: {
-        type: Boolean,
-    }
+    // reserved: {
+    //     type: Boolean,
+    // }
   });
   export const modelRoom = mongoose.model('rooms', Room);

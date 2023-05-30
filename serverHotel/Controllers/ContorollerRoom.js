@@ -1,13 +1,40 @@
+import { ServiceRoom } from "../servicios/ServiceRoom.js"
 export class ContorollerRooms{
     constructor(){
 
     }
-    saveRoom(request, response){
+
+    async saveRoom(request, response){
+        let data = request.body;
         try {
-            let data = request.body
-            console.log("DATA: ",data)
+            let objectRoom = new ServiceRoom();
+            if (data.price < 100){
+                response.status(400).json({
+                    "message": "failed process, price invalid"
+                })
+            }else if(data.numberpeoples < 1){
+                response.status(400).json({
+                    "message": "failed process, numbers peoples invalid"
+                })
+            }else{
+                await objectRoom.register(data)
+                response.status(200).json({
+                    "message":"saved room"
+                }) 
+            }
+        } catch (error) {
+            response.status(400).json({
+                "message": "failed process"+ error
+            })
+        }
+    }
+    async searchRoom(request,response){
+        let idRoom = request.params.idroom;
+        try {
+            let objectRoom = new ServiceRoom();
             response.status(200).json({
-            "message":"processed correctly"
+                "message":"processed correctly",
+                "romm": await objectRoom.searhId(idRoom)
             })
         } catch (error) {
             response.status(400).json({
@@ -15,23 +42,12 @@ export class ContorollerRooms{
             })
         }
     }
-    searchRoom(request,response){
+    async searchRooms(request,response){
         try {
-            let idRoom = request.params.idroom
-            console.log("ID: ",idRoom)
+            let objectRooms = new ServiceRoom();
             response.status(200).json({
-            "message":"processed correctly"
-            })
-        } catch (error) {
-            response.status(400).json({
-                "message": "failed process"+ error
-            })
-        }
-    }
-    searchRooms(request,response){
-        try {
-            response.status(200).json({
-            "message":"processed correctly"
+                "message":"processed correctly",
+                "rooms": await objectRooms.searhAll()
             })
         } catch (error) {
             response.status(200).json({
@@ -39,12 +55,14 @@ export class ContorollerRooms{
             })
         }
     }
-    updateRoom(request,response){
+    async updateRoom(request,response){
+        let idRoom = request.params.idroom;
+        let data = request.body;
         try {
-            let idRoom = request.params.idroom
-            console.log("ID:", idRoom)
+            let objectRoom = new ServiceRoom();
+            await objectRoom.update(idRoom, data)
             response.status(200).json({
-            "message":"processed correctly"
+            "message":"Updated room correctly"
             })   
         } catch (error) {
             response.status(400).json({
@@ -52,12 +70,13 @@ export class ContorollerRooms{
             })
         }
     }
-    deleteRoom(request,response){
+    async deleteRoom(request,response){
+        let idRoom = request.params.idroom
         try {
-            let idRoom = request.params.idroom
-            console.log("idRoom:", idRoom)
+            let objectRoom = new ServiceRoom();
+            await objectRoom.delete(idRoom)
             response.status(200).json({
-                "message":"processed correctly"
+                "message":"Room  deleted correctly"
             })   
         } catch (error) {
             response.status(400).json({

@@ -3,29 +3,37 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const Booking =  new Schema({
-    nameClient: {
+    idroom: {
+        type: String,
+        required: true
+    },
+    nameclient: {
         type : String,
         required : true,
     },
-    lastNameClient: {
+    lastNameclient: {
         type : String,
         required : true,
     },
-    dateStartBooking: {
+    datestartbooking: {
         type : Date,
         required : true
     },
-    dateEndBooking: {
+    dateendbooking: {
         type : Date,
         required : true,
     },
-    numberChildrens:{
+    numberchildrens:{
         type : Number,
         required : true
     },
-    numberAdults:{
+    numberadults:{
         type : Number,
         required : true
+    },
+    totalprice:{
+        type:Number,
+        required:true
     }
   });
  export const modelBooking = mongoose.model('Bookings', Booking)
