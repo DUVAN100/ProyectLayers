@@ -21,7 +21,7 @@ export class ServiceRoom{
     }
 
     async delete(id){
-        return await modelRoom.findOneAndDelete(id)
+        return await modelRoom.findByIdAndDelete(id)
     }
 
 }

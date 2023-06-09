@@ -21,11 +21,17 @@ export class ContorollerBooking{
                     response.status(400).json({
                         "message": "Process failed, review the dates."
                     })
-                }else if(data.numberadults < 1 && data.numberchildrens > 5){
+                }else if(data.numberadults < 1){
                     response.status(400).json({
-                        "message": "Process failed, Review the fields number adults and number children."
+                        "message": "Process failed, Review the fields number adults."
                     })
-                }else{
+
+                }else if(data.numberchildrens > 5){
+                    response.status(400).json({
+                        "message": "Process failed, Review the fields number childrens."
+                    })
+                }
+                else{
                     await objectBooking.register(data);         
                     response.status(200).json({
                         "message":"Saved booking",
@@ -51,9 +57,9 @@ export class ContorollerBooking{
         let idBooking = request.params.idbooking
         try {
             let objectBooking = new ServiceBooking();
-            await objectBooking.searhId(idBooking)
             response.status(200).json({
-            "message":"processed correctly"  
+            "message":"processed correctly",
+            "Booking" : await objectBooking.searhId(idBooking)  
             })   
         } catch (error) {
             response.status(200).json({
@@ -64,7 +70,6 @@ export class ContorollerBooking{
 
     async searchBookings(request,response){
         try {
-            console.log("Enter methoid")
             let objectBooking = new ServiceBooking();
             response.status(200).json({
             "message":"processed correctly",

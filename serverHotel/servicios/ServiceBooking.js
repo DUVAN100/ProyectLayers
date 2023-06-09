@@ -20,7 +20,7 @@ export class ServiceBooking{
     }
 
     async delete(id){
-        return await modelBooking.findOneAndDelete(id)
+        return await modelBooking.findByIdAndDelete(id)
     }
 
 }

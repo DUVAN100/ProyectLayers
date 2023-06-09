@@ -1,5 +1,6 @@
 import express from "express";
 import { routes } from './Routes/routers.js'
+import cors from 'cors'
 import { setConnection } from './database/connection.js'
 
 export class API{
@@ -11,8 +12,9 @@ export class API{
     raiseServer(){
         this.app.listen(process.env.PORT, ()=>console.log(`Serer on in ${process.env.PORT}`))
     };
-    routerequest(){     
-        this.app.use(express.json() )
+    routerequest(){  
+        this.app.use(cors())   
+        this.app.use(express.json())
         this.app.use('/', routes);
     };
     conectWithDb(){
